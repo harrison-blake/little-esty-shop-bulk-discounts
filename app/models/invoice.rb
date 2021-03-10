@@ -23,4 +23,8 @@ class Invoice < ApplicationRecord
   #   .select('invoice_items.quantity, sum(invoice_items.quantity * invoice_items.unit_price)')
   #   .group(:quantity)
   # end
+
+  def total_discount
+
+  end
 end
