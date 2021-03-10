@@ -13,9 +13,9 @@ class InvoiceItem < ApplicationRecord
   def revenue_with_discounts
     best = self.best_applicable_discount
     if best.nil?
-      revenue_without_discounts.to_f
+      self.revenue_without_discounts
     else
-      revenue_without_discounts - (revenue_without_discounts * best.discount).to_f
+      self.revenue_without_discounts - (self.revenue_without_discounts * best.discount).to_f
     end
   end
 

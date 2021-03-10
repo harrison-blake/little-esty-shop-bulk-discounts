@@ -22,7 +22,13 @@
     <div class="card-body">
       Quantity ordered: <%= invoice_item.quantity %><br>
       Price: <%= invoice_item.unit_price %><br>
-      Item status: <%= invoice_item.status %>
+      Item status: <%= invoice_item.status %><br>
+      <% if invoice_item.best_applicable_discount.nil? %>
+        <p>Discount: none</p>
+      <% else %>
+        <p>Discount: <%= link_to invoice_item.best_applicable_discount.name, "/merchants/#{params[:merchant_id]}/bulk_discounts/#{invoice_item.best_applicable_discount.id}" %></p>
+      <% end %>
+
     </div>
   </div>
   <% end %>
@@ -33,5 +39,4 @@
       Total without Bulk Discount: $<%= "#{@invoice.total_revenue}".ljust(4, '0') %>
     </h2>
 </div>
-
-<h2 class="bulk-total-revenue">Total with Bulk Discount Applied: </h2>
+<h2 class="bulk-total-revenue">Total with Bulk Discount Applied: $<%= @invoice.discounted_revenue %> </h2>
