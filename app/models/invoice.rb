@@ -3,6 +3,7 @@ class Invoice < ApplicationRecord
   has_many :transactions, dependent: :destroy
   has_many :invoice_items, dependent: :destroy
   has_many :items, through: :invoice_items
+  has_many :bulk_discounts, through: :invoice_items
 
   enum status: [ :cancelled, :'in progress', :completed ]
 
@@ -24,7 +25,8 @@ class Invoice < ApplicationRecord
   #   .group(:quantity)
   # end
 
-  def total_discount
-
-  end
+  # def total_discount
+  #   invoice_items.where('invoice_items.quantity >= ?', 10)
+  #   .sum('invoice_items.quantity * invoice_items.unit_price * .20')
+  # end
 end
