@@ -8,7 +8,7 @@ RSpec.describe InvoiceItem, type: :model do
   end
 
   before :each do
-    @merchant = Merchant.create!(:name "Harrison Blake")
+    # @merchant = Merchant.create!(:name "Harrison Blake")
   end
 
   describe "##instance methods" do
