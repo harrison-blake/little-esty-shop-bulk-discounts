@@ -15,16 +15,6 @@
         <p><%= message %></p>
       </div>
     <% end %>
-    <%= @repo.name %>
     <%= yield %>
-    <p> Contributors:
-      <% @contributors.names.each do |name| %>
-        <%= name %>,
-      <% end %>
-    </p>
-    <%= "Trevor's commits: #{@service.trev_commits}" %><br>
-    <%= "Harrison's commits: #{@service.harrison_commits}" %><br>
-    <%= "Doug's commits: #{@service.doug_commits}" %><br>
-    <%= "Total Project Pull requests: #{@repo_pr.pull_request.count}" %>
   </body>
 </html>

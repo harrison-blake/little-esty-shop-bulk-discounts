@@ -4,7 +4,8 @@ class Merchant < ApplicationRecord
   has_many :invoices, -> { distinct }, through: :items
   has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
-  
+  has_many :bulk_discounts
+
   enum status: [ :disabled, :enabled ]
 
 
@@ -21,7 +22,8 @@ class Merchant < ApplicationRecord
     .select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) as revenue")
     .where("transactions.result = ?", 0)
     .group("items.id")
-    .order(revenue: :desc).limit(5)
+    .order(revenue: :desc)
+    .limit(5)
   end
 
   def top_five_customers
@@ -47,7 +49,7 @@ class Merchant < ApplicationRecord
     .first
     .created_at
   end
-  
+
   def self.top_five_by_revenue
     joins(invoices: :transactions)
     .where('transactions.result = ?', 0)

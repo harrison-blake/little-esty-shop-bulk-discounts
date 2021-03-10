@@ -1,0 +1,13 @@
+<h2>Edit Discount</h2>
+<%= form_with(url: "/merchants/#{params[:merchant_id]}/bulk_discounts/#{params[:id]}", method: "patch") do %>
+  <%= label_tag :name %>
+  <%= text_field_tag :name, @bulk_discount.name %></br>
+
+  <%= label_tag :discount %>
+  <%= text_field_tag :discount, @bulk_discount.discount %></br>
+
+  <%= label_tag :threshold %>
+  <%= text_field_tag :threshold, @bulk_discount.threshold %></br>
+
+  <%= submit_tag 'Edit Discount ' %>
+<% end %>

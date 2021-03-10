@@ -1,0 +1,6 @@
+<div class="jumbotron">
+  <h1 class="display-3"><%= @bulk_discount.name %>!</h1>
+  <p class="lead"><%= number_to_percentage(@bulk_discount.discount.to_f*100, precision: 0) %> off if you buy <%= @bulk_discount.threshold %> or more items.</p>
+  <hr class="my-4">
+  <p><%= link_to "edit", "/merchants/#{params[:merchant_id]}/bulk_discounts/#{params[:id]}/edit" %></p>
+</div>

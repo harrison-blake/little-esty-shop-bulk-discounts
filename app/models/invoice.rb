@@ -17,4 +17,10 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum('quantity * unit_price')
   end
+
+  # def total_revenue_with_discount
+  #   invoice_items
+  #   .select('invoice_items.quantity, sum(invoice_items.quantity * invoice_items.unit_price)')
+  #   .group(:quantity)
+  # end
 end

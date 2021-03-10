@@ -1,0 +1,12 @@
+<div class="jumbotron">
+  <h1 class="display-3"><%= @merchant.name %> Discounts!</h1>
+  <p class="lead">Links to each discount that this merchant offers!</p>
+  <p class="lead"><%= link_to "Add New Discount", "/merchants/#{@merchant.id}/bulk_discounts/new"%></p>
+  <hr class="my-4">
+  <div class="discounts">
+    <% @merchant.bulk_discounts.each do |discount| %>
+      <p><%= link_to discount.name, "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %> - <%= number_to_percentage(discount.discount.to_f*100, precision: 0) %> off if you buy <%= discount.threshold %> or more items.</p>
+      <p><%= button_to "delete", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %></p>
+    <% end %>
+  </div>
+</div>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     scope module: 'merchant' do
       resources :items
       resources :invoices
+      resources :bulk_discounts
     end
   end
 end

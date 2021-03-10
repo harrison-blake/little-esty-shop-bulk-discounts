@@ -36,7 +36,7 @@ RSpec.describe "When I visit a Merchant's dashboard", type: :feature do
 
   scenario "I see a link to the merchants item and invoice indexs" do
     visit "/merchants/#{@joe.id}/dashboard"
-    
+
     within(".navbar") do
       expect(page).to have_link("Items")
       expect(page).to have_link("Invoices")
@@ -97,6 +97,16 @@ RSpec.describe "When I visit a Merchant's dashboard", type: :feature do
     end
     within("#customer-#{@customer1.id}") do
       expect(page).to have_content(successcount5)
+    end
+  end
+
+  scenario "when I visit my merchant dashboard I see a link to view my discounts" do
+    visit "/merchants/#{@joe.id}/dashboard"
+
+    within(".discounts-link") do
+      expect(page).to have_link("Bulk Discounts")
+      click_link("Bulk Discounts")
+      expect(current_path).to eq("/merchants/#{@joe.id}/bulk_discounts")
     end
   end
 end

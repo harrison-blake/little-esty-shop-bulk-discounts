@@ -30,6 +30,8 @@
 
 <div class="total_revenue">
     <h2>
-      Total: $<%= "#{@invoice.total_revenue}".ljust(4, '0') %>
+      Total without Bulk Discount: $<%= "#{@invoice.total_revenue}".ljust(4, '0') %>
     </h2>
 </div>
+
+<h2 class="bulk-total-revenue">Total with Bulk Discount Applied: </h2>

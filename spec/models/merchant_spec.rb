@@ -7,6 +7,7 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:invoices).through(:items) }
     it { should have_many(:transactions).through(:invoices) }
     it { should have_many(:customers).through(:invoices) }
+    it { should have_many(:bulk_discounts) }
   end
 
   before :each do
@@ -129,7 +130,7 @@ RSpec.describe Merchant, type: :model do
       end
 
     describe "##top_5_items" do
-      it "returns the top 5 items by revenue generated" do
+      before :each do
         @joe = Merchant.create!(name: "Joe Rogan")
         @item1 = @joe.items.create!(name: "Basketball", description: "Bouncy", unit_price: 2)
         @item2 = @joe.items.create!(name: "Baseball", description: "Not Bouncy", unit_price: 2)
@@ -164,16 +165,23 @@ RSpec.describe Merchant, type: :model do
         InvoiceItem.create!(invoice: @inv6, item: @item6, unit_price: 2, quantity: 2, status: "shipped")
         InvoiceItem.create!(invoice: @inv7, item: @item6, unit_price: 2, quantity: 7, status: "shipped")
         InvoiceItem.create!(invoice: @inv7, item: @item6, unit_price: 2, quantity: 8, status: "shipped")
-
+      end
+      it "returns the top 5 items by revenue generated" do
         expect(@joe.top_5_items_by_revenue.length).to eq(5)
         expect(@joe.top_5_items_by_revenue.include?(@item1)).to eq(false)
         expect(@joe.top_5_items_by_revenue.first).to eq(@item5)
         expect(@joe.top_5_items_by_revenue.second).to eq(@item4)
         expect(@joe.top_5_items_by_revenue.third).to eq(@item3)
+        expect(@joe.top_5_items_by_revenue.fourth).to eq(@item2)
+        expect(@joe.top_5_items_by_revenue.last).to eq(@item6)
         expect(@joe.top_5_items_by_revenue.first.revenue).to eq(10)
       end
 
-      describe "##best_day" do
+      it "does not include invoices with no successful transactions" do
+        expect(@joe.top_5_items_by_revenue.last.revenue).to eq(4)
+      end
+    end
+    describe "##best_day" do
         it "can find the merchants best day of revenue" do
           merchant3 = Merchant.create!(name: "merchant 3")
           im3 = merchant3.items.create!(name: "not Basketball", description: "Bouncy", unit_price: 40)
@@ -210,7 +218,6 @@ RSpec.describe Merchant, type: :model do
           expect(merchant4.best_day).to eq(invmerch6.created_at)
           expect(merchant4.best_day).to_not eq(invmerch4.created_at)
         end
-      end
     end
   end
 end
